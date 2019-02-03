@@ -25,19 +25,24 @@ export const NavigationBar = () => (
  */
 export const NavigationDetails = ({
   arrayElement,
-  musicStyle
+  musicStyle,
+  currentDetail = ''
 }: {
   arrayElement: Array<string>,
-  musicStyle: string
+  musicStyle: string,
+  currentDetail: string
 }): Array<any> =>
-  arrayElement.map(detail => (  
-    <li key={detail} className="wizzardElement">
-        <Link to={detail !== "blues" ? `/${musicStyle}/${detail}` : `/${detail}`}>
-        {pointFreeUpperCase(detail)}
-        <div className="wizzard"/>
-      </Link>
-    </li>
-  ));
+  arrayElement.map(detail => {
+    let className = '';
+    if (detail === currentDetail) {
+      className = 'active';
+    }
+    return (
+      <li key={detail}>
+        <Link className={className} to={detail !== "blues" ? `/${musicStyle}/${detail}` : `/${detail}`}/>
+      </li>
+    )
+  });
 
 /**
  *  Navigation Details Component
@@ -52,11 +57,9 @@ export const NavigationSubDetails = ({
   musicDetail: string
 }): Array<any> =>
   arrayElement.map(detail => (
-    <div className="">
-      <li key={detail}>
-        <Link to={`/${musicStyle}/${musicDetail}/${detail}`}>
-          {pointFreeUpperCase(detail)}
-        </Link>
-      </li>
-    </div>
+    <li key={detail}>
+      <Link to={`/${musicStyle}/${musicDetail}/${detail}`}>
+        {pointFreeUpperCase(detail)}
+      </Link>
+    </li>
   ));
